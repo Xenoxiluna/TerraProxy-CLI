@@ -21,6 +21,13 @@
 - [Swift-Argument-Parser 0.0.5](https://github.com/apple/swift-argument-parser)
 - [BinarySwift](https://github.com/Szaq/BinarySwift)
 
+ ## Building
+ To build on linux:
+ 
+ `git clone https://github.com/Xenoxiluna/TerraProxy-CLI.git
+ cd TerraProxy-CLI
+ swift build`
+
  ## License
 
  `TerraProxy-CLI` is licensed under the [MIT License](LICENSE)
