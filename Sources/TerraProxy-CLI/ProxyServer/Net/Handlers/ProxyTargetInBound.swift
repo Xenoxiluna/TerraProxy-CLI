@@ -16,12 +16,12 @@ class ProxyTargetInBound : ChannelInboundHandler {
 
 	let group       : MultiThreadedEventLoopGroup
 	let source      : Channel
-    let logger      : Logger
+	let logger      : Logger
 	
-    public init(group: MultiThreadedEventLoopGroup, source: Channel, logger: Logger) {
+	public init(group: MultiThreadedEventLoopGroup, source: Channel, logger: Logger) {
 		self.group       = group
 		self.source      = source
-        self.logger      = logger
+		self.logger      = logger
 	}
 	
 	public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
