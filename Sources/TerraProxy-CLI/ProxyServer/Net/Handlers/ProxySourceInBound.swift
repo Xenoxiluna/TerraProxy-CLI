@@ -51,10 +51,10 @@ class ProxySourceInBound : ChannelInboundHandler {
 		    break
 		case .connected:
 		    channelsSyncQueue.async {
-			if let channel = self.channels[id] {
-			    let bb = self.unwrapInboundIn(data)
-			    HandlePacket(channel: channel, bb: bb, connection: self.connection)
-			}
+                if let channel = self.channels[id] {
+                    let bb = self.unwrapInboundIn(data)
+                    HandlePacket(channel: channel, bb: bb, connection: self.connection)
+                }
 		    }
 		}
 	}
@@ -62,13 +62,13 @@ class ProxySourceInBound : ChannelInboundHandler {
 	public func channelInactive(context: ChannelHandlerContext) {
 		let id = ObjectIdentifier(context.channel)
 		self.channelsSyncQueue.async {
-		if let channel = self.channels[id] {
-                	if let s = channel.localAddress{
-                    		self.logger.info("Closing connection: \(s.ipAddress!):\(s.port!)")
-                	}
-			channel.close(mode: .all, promise: nil)
-		}
-	}
+            if let channel = self.channels[id] {
+                if let s = channel.localAddress{
+                        self.logger.info("Closing connection: \(s.ipAddress!):\(s.port!)")
+                }
+                channel.close(mode: .all, promise: nil)
+            }
+        }
 	}
     
     private func handleInitialData(context: ChannelHandlerContext, data: NIOAny) {
