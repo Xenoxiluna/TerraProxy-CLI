@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "BinarySwift",
+        "repositoryURL": "https://github.com/Szaq/BinarySwift.git",
+        "state": {
+          "branch": "master",
+          "revision": "b4635df053999eac3eaae97dfb8bc4fffe4f5773",
+          "version": null
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
+        "state": {
+          "branch": null,
+          "revision": "9f04d1ff1afbccd02279338a2c91e5f27c45e93a",
+          "version": "0.0.5"
+        }
+      },
+      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {

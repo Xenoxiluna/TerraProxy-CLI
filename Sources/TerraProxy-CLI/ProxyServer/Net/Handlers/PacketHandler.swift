@@ -24,38 +24,32 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
     let packet: Packet = Packet(packet: bb)
     
     switch packet.getType(){
-        case PacketType.ConnectRequest:
-            print("Packet type: \(packet.getType())")
-            channel.writeAndFlush(NIOAny.init(bb), promise: nil)
-            break
-
-        case PacketType.PlayerInfo:
-            print("Packet type: \(packet.getType())")
-            channel.writeAndFlush(NIOAny.init(bb), promise: nil)
-            break
-
-        case PacketType.InventorySlot:
-            print("Packet type: \(packet.getType())")
-            channel.writeAndFlush(NIOAny.init(bb), promise: nil)
-            break
-
-        case PacketType.RequestWorldInfo:
-            print("Client Requested World Information")
-            print("Packet type: \(packet.getType())")
-            channel.writeAndFlush(NIOAny.init(bb), promise: nil)
-            break
-
-        default:
-            print("Unknown packet type: \(packet.getType())")
-            /*if let s = bb.getString(at: bb.readerIndex, length: bb.readableBytes) {
-                print("Got #\(bb.readableBytes) bytes:", s)
-            }
-            else {
-                print("Got #\(bb.readableBytes) bytes:", bb)
-            }*/
-            // Echo back received data (Note: write only buffers, `flush` must be
-            // called to actually send it to the socket).
-            channel.writeAndFlush(NIOAny.init(bb), promise: nil)
-            break
+    case PacketType.ConnectRequest:
+        print("Packet type: \(packet.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerInfo:
+        print("Packet type: \(packet.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.InventorySlot:
+        print("Packet type: \(packet.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.RequestWorldInfo:
+        print("Client Requested World Information")
+        print("Packet type: \(packet.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.LoadNetModule:
+        let nmPacket = PacketNetModule(packet: bb)
+        print("Packet type: \(nmPacket.getType())")
+        print("NetModule Packet Bytes: \(nmPacket.packetBytes)")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    default:
+        print("Packet type: \(packet.getType())")
+        /*if let s = bb.getString(at: bb.readerIndex, length: bb.readableBytes) {
+            print("Got #\(bb.readableBytes) bytes:", s)
+        }
+        else {
+            print("Got #\(bb.readableBytes) bytes:", bb)
+        }*/
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     }
 }
