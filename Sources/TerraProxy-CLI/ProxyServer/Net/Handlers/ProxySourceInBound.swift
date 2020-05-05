@@ -17,59 +17,58 @@ class ProxySourceInBound : ChannelInboundHandler {
 
 	private let group           : MultiThreadedEventLoopGroup
 	private let target          : HostInfo
-    private let logger          : Logger
-    private var connectionState : ConnectionState
+	private let logger          : Logger
+	private var connectionState : ConnectionState
 	private var channels        : [ObjectIdentifier : Channel] = [:]
 	
-    private var connection: PlayerConnection = PlayerConnection()
+	private var connection: PlayerConnection = PlayerConnection()
 	private let channelsSyncQueue = DispatchQueue(label: "channelsQueue")
 	
 	let targetIntercept : [ChannelHandler]
 	
-    public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger, targetIntercept:[ChannelHandler] = []) {
+	public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger, targetIntercept:[ChannelHandler] = []) {
 		self.group           = group
 		self.target          = target
 		self.targetIntercept = targetIntercept
-        self.logger          = logger
-        self.connectionState = .idle
+		self.logger          = logger
+		self.connectionState = .idle
 	}
 
 	public func channelActive(context: ChannelHandlerContext) {
-        let source = context.channel
+		let source = context.channel
         
-        if let s = source.localAddress{
-            self.logger.info("Incoming connection: \(s.ipAddress!):\(s.port!)")
-        }
+		if let s = source.localAddress{
+			self.logger.info("Incoming connection: \(s.ipAddress!):\(s.port!)")
+		}
 	}
 
 	public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-		
 		let id = ObjectIdentifier(context.channel)
 		switch connectionState {
-        case .idle:
-            self.handleInitialData(context: context, data: data)
-        case .beganConnecting:
-            break
-        case .connected:
-            channelsSyncQueue.async {
-                if let channel = self.channels[id] {
-                    let bb = self.unwrapInboundIn(data)
-                    HandlePacket(channel: channel, bb: bb, connection: self.connection)
-                }
-            }
-        }
+		case .idle:
+		    self.handleInitialData(context: context, data: data)
+		case .beganConnecting:
+		    break
+		case .connected:
+		    channelsSyncQueue.async {
+			if let channel = self.channels[id] {
+			    let bb = self.unwrapInboundIn(data)
+			    HandlePacket(channel: channel, bb: bb, connection: self.connection)
+			}
+		    }
+		}
 	}
 
 	public func channelInactive(context: ChannelHandlerContext) {
 		let id = ObjectIdentifier(context.channel)
 		self.channelsSyncQueue.async {
-			if let channel = self.channels[id] {
-                if let s = channel.localAddress{
-                    self.logger.info("Closing connection: \(s.ipAddress!):\(s.port!)")
-                }
-				channel.close(mode: .all, promise: nil)
-			}
+		if let channel = self.channels[id] {
+                	if let s = channel.localAddress{
+                    		self.logger.info("Closing connection: \(s.ipAddress!):\(s.port!)")
+                	}
+			channel.close(mode: .all, promise: nil)
 		}
+	}
 	}
     
     private func handleInitialData(context: ChannelHandlerContext, data: NIOAny) {
