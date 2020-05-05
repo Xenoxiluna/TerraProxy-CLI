@@ -24,8 +24,8 @@
  ## Building
  To build on linux:
  
- git clone https://github.com/Xenoxiluna/TerraProxy-CLI.git
- cd TerraProxy-CLI
+ git clone https://github.com/Xenoxiluna/TerraProxy-CLI.git<br/>
+ cd TerraProxy-CLI<br/>
  swift build
 
  ## License
