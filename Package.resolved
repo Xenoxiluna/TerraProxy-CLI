@@ -32,9 +32,9 @@
         "package": "SwiftyBytes",
         "repositoryURL": "https://github.com/Xenoxiluna/SwiftyBytes.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "8377fc3658ab43d24a76e74d6e7b5b43be0c8282",
-          "version": null
+          "version": "0.1.0"
         }
       }
     ]
