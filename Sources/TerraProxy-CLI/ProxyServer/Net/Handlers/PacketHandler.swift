@@ -13,37 +13,112 @@ import NIOHTTP1
 /// This is the type of data the `channelRead` method receives from NIO.
 typealias InboundIn = ByteBuffer
 
-/// Packet Structure
-/// Offset  |  Type  |  Description
-///   0       Int32    Message Length
-///   1       Byte     Message Type
-///   2        *       Payload
-/// ----------------------------------
-/// new byte[] { 0, 0, 1 }
-func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection){
-    let packet: Packet = Packet(packet: bb)
+func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection) {
+    guard let packet: Packet = try? Packet(packet: Data(bb.getBytes(at: 0, length: bb.readableBytes)!)) else{
+        print("Unable to parse Packet")
+        channel.writeAndFlush(NIOAny.init(bb))
+        return
+    }
     
     switch packet.getType(){
     case PacketType.ConnectRequest:
-        print("Packet type: \(packet.getType())")
+        guard let crPacket = try? PacketConnectionRequest(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(crPacket.getType())")
+        print("Client version: \(crPacket.version)")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.PlayerInfo:
-        print("Packet type: \(packet.getType())")
+        guard let piPacket = try? PacketPlayerInfo(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(piPacket.getType())")
+        print("Character Name: \(piPacket.name)")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.InventorySlot:
-        print("Packet type: \(packet.getType())")
+        guard let iPacket = try? PacketInventorySlot(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(iPacket.getType())")
+        print("Item ID: \(iPacket.itemId)")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerHp:
+        guard let psPacket = try? PacketPlayerHp(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(psPacket.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerBuff:
+        guard let psPacket = try? PacketPlayerBuff(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(psPacket.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerMana:
+        guard let psPacket = try? PacketPlayerMana(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(psPacket.getType())")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.RequestWorldInfo:
-        print("Client Requested World Information")
-        print("Packet type: \(packet.getType())")
+        guard let wiPacket = try? PacketWorldInfo(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("WorldInfo Packet Bytes: \(packet.allPacketBytes)")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(wiPacket.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.TileGetSection:
+        guard let iPacket = try? PacketTileGetSection(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(iPacket.getType())")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerSpawn:
+        guard let psPacket = try? PacketPlayerSpawn(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(psPacket.getType())")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.LoadNetModule:
-        let nmPacket = PacketNetModule(packet: bb)
+        guard let nmPacket = try? PacketNetModule(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
         print("Packet type: \(nmPacket.getType())")
-        print("NetModule Packet Bytes: \(nmPacket.packetBytes)")
+        print("NetModule Packet Bytes: \(nmPacket.allPacketBytes)")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     default:
         print("Packet type: \(packet.getType())")
+        print("Packet Bytes: \(packet.allPacketBytes)")
         /*if let s = bb.getString(at: bb.readerIndex, length: bb.readableBytes) {
             print("Got #\(bb.readableBytes) bytes:", s)
         }

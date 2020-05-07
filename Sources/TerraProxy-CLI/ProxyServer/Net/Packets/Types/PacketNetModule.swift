@@ -6,16 +6,26 @@
 //
 
 import Foundation
-import BinarySwift
+import SwiftyBytes
 
 class PacketNetModule: Packet{
     private let HEADER_SIZE = 5
-    private var Id: UInt16
+    private var Ids: UInt16
     private var Buffer: [UInt8]
     
-    override init(packet: InboundIn) {
-        self.Id = 0
+    override init(packet: Data) throws {
+        self.Ids = 0
         self.Buffer = []
-        super.init(packet: packet)
+        try super.init(packet: packet)
+    }
+    
+    override init(packet: Packet) throws {
+        self.Ids = 0
+        self.Buffer = []
+        try super.init(packet: packet)
+    }
+    
+    public func encode() throws -> Data{
+        return Data()
     }
 }

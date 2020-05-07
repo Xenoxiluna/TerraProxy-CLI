@@ -11,9 +11,9 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.0.5"),
-        .package(url: "https://github.com/Szaq/BinarySwift.git", .branch("master")),
+        .package(url: "https://github.com/Xenoxiluna/SwiftyBytes.git", .branch("master")),
     ],
     targets: [
-        .target(name: "TerraProxy-CLI", dependencies: ["NIO", "NIOHTTP1", "Logging", "ArgumentParser", "BinarySwift"]),
+        .target(name: "TerraProxy-CLI", dependencies: ["NIO", "NIOHTTP1", "Logging", "ArgumentParser", "SwiftyBytes"]),
     ]
 )
