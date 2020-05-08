@@ -16,10 +16,10 @@
  
  ## Dependencies
 
-- [Swift-NIO v2.16.0](https://github.com/apple/swift-nio)
+- [Swift-NIO v2.16.1](https://github.com/apple/swift-nio)
 - [Swift-Log 1.2.0](https://github.com/apple/swift-log)
 - [Swift-Argument-Parser 0.0.5](https://github.com/apple/swift-argument-parser)
-- [SwiftyBytes 0.1.0](https://github.com/Xenoxiluna/SwiftyBytes)
+- [SwiftyBytes 0.2.0](https://github.com/Xenoxiluna/SwiftyBytes)
 
  ## Building
  To build on linux:

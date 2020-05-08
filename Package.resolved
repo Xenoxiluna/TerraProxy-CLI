@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "e876fb37410e0036b98b5361bb18e6854739572b",
-          "version": "2.16.0"
+          "revision": "40bdad80882d307abe2c0bb36cf3bd4d3e03fe04",
+          "version": "2.16.1"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/SwiftyBytes.git",
         "state": {
           "branch": null,
-          "revision": "8377fc3658ab43d24a76e74d6e7b5b43be0c8282",
-          "version": "0.1.0"
+          "revision": "e3959117fb8929f7f77ce967e743595906b1f110",
+          "version": "0.2.0"
         }
       }
     ]
