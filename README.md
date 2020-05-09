@@ -2,6 +2,12 @@
 # `TerraProxy-CLI`
   Terraria Proxy Server
 
+## Compatibility
+| OS |
+| macOS 10.15.4 |
+| Ubuntu 18.04 64bit |
+| Ubuntu 18.04 ARM64/32 |
+
  ## Usage
  From terminal, run the following:
  
