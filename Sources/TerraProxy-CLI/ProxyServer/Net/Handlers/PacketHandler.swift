@@ -97,6 +97,16 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
         }
         print("Packet type: \(iPacket.getType())")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.Zones:
+        guard let zPacket = try? PacketZones(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(zPacket.getType())")
+        print("Zones Packet Bytes: \(packet.allPacketBytes)")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.PlayerSpawn:
         guard let psPacket = try? PacketPlayerSpawn(packet: packet) else {
             print("Packet type: \(packet.getType())")
@@ -106,6 +116,29 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
         }
         print("Packet type: \(psPacket.getType())")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerUpdate:
+        guard let puPacket = try? PacketPlayerUpdate(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            print("PlayerUpdate Packet Bytes: \(packet.allPacketBytes)")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(puPacket.getType())")
+        print("PlayerUpdate velocity y: \(puPacket.velx)")
+        print("PlayerUpdate velocity y: \(puPacket.vely)")
+        print("PlayerUpdate Packet Bytes: \(puPacket.allPacketBytes)")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+    case PacketType.PlayerDamage:
+        guard let pdPacket = try? PacketPlayerDamage(packet: packet) else {
+            print("Packet type: \(packet.getType())")
+            print("Unable to parse Packet")
+            channel.writeAndFlush(NIOAny.init(bb))
+            return
+        }
+        print("Packet type: \(pdPacket.getType())")
+        print("PlayerUpdate Packet Bytes: \(pdPacket.allPacketBytes)")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     case PacketType.LoadNetModule:
         guard let nmPacket = try? PacketNetModule(packet: packet) else {
             print("Packet type: \(packet.getType())")
@@ -114,7 +147,8 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
             return
         }
         print("Packet type: \(nmPacket.getType())")
-        print("NetModule Packet Bytes: \(nmPacket.allPacketBytes)")
+        print("NetModule Command: \(nmPacket.command)")
+        print("NetModule Mesage: \(nmPacket.message)")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
     default:
         print("Packet type: \(packet.getType())")
