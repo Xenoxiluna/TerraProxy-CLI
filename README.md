@@ -1,6 +1,6 @@
 # WORK IN PROGRESS
 # `TerraProxy-CLI`
-  Terraria Proxy Server
+  Terraria Proxy Server. You can find Binaries under Releases.
 
 ## Compatibility
 | OS |
