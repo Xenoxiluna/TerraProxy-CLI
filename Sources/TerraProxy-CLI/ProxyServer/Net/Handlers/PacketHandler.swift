@@ -15,7 +15,6 @@ import XTerraPacket
 typealias InboundIn = ByteBuffer
 
 func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection) {
-    
     let packetData = bb.getBytes(at: 0, length: bb.readableBytes)!
     guard var packet = try? TerrariaPacketFactory.decodePacket(packet: packetData) else {
         print("Parse failed!")
@@ -30,5 +29,6 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
     }catch{
         print("Decode failed...")
     }
+    print("Packet Type: \(packet.bytes))")
     channel.writeAndFlush(NIOAny.init(bb), promise: nil)
 }
