@@ -26,7 +26,7 @@ class PlayerConnection {
         self.channel = channel
     }
 
-    func sendPacket(packet: Packet) {
+    /*func sendPacket(packet: Packet) {
         self.channel!.writeAndFlush(NIOAny.init(packet))
     }
 
@@ -35,7 +35,7 @@ class PlayerConnection {
             self.channel!.write(NIOAny(packet))
         }
         self.channel!.flush()
-    }
+    }*/
 
     func getContext() -> Channel {
         return self.channel!

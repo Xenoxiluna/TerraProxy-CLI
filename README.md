@@ -27,6 +27,7 @@
 - [Swift-Log 1.2.0](https://github.com/apple/swift-log)
 - [Swift-Argument-Parser 0.0.5](https://github.com/apple/swift-argument-parser)
 - [SwiftyBytes 0.2.0](https://github.com/Xenoxiluna/SwiftyBytes)
+- [XTerraPacket](https://github.com/Xenoxiluna/XTerraPacket)
 
  ## Building
  To build on linux:
