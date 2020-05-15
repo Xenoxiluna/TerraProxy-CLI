@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
         "state": {
           "branch": null,
-          "revision": "9f04d1ff1afbccd02279338a2c91e5f27c45e93a",
-          "version": "0.0.5"
+          "revision": "223d62adc52d51669ae2ee19bdb8b7d9fd6fcd9c",
+          "version": "0.0.6"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/XTerraPacket.git",
         "state": {
           "branch": null,
-          "revision": "12c1ca945a3bc84afb60f4453d973084bd54de12",
-          "version": "0.0.3"
+          "revision": "c74a130eb8f5d1c2109a2bf7171e7d368719532c",
+          "version": "0.3.0"
         }
       }
     ]
