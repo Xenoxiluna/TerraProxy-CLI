@@ -18,17 +18,30 @@ func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection)
     let packetData = bb.getBytes(at: 0, length: bb.readableBytes)!
     guard var packet = try? TerrariaPacketFactory.decodePacket(packet: packetData) else {
         print("Parse failed!")
+        print("Failed bytes: \(packetData))")
         channel.writeAndFlush(NIOAny.init(bb), promise: nil)
         return
     }
+    
     print("Swift Packet type: \(type(of: packet))")
     print("Packet Type: \(packet.getType())")
     
     do{
         try packet.decode()
+        print("Decoded Packet Bytes: \(packet.bytes))")
     }catch{
         print("Decode failed...")
+        print("Failed Packet Bytes: \(packet.bytes))")
+        return
     }
-    print("Packet Type: \(packet.bytes))")
+    
+    switch packet.getType(){
+    case TerrariaPacketType.ConnectApproval:
+        let appPacket = packet as! PacketConnectApproval
+        connection.setPlayerId(playerId: Int(appPacket.playerId))
+    default:
+        print("")
+    }
+    
     channel.writeAndFlush(NIOAny.init(bb), promise: nil)
 }

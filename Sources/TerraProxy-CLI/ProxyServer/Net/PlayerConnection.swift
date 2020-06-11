@@ -44,6 +44,10 @@ class PlayerConnection {
     func getPlayerId() -> Int {
         return playerId
     }
+    
+    func setPlayerId(playerId: Int) {
+        self.playerId = playerId
+    }
 
     func getPhase() -> PlayerConnectionState {
         return phase!
