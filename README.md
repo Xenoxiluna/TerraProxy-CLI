@@ -23,10 +23,10 @@
  
  ## Dependencies
 
-- [Swift-NIO v2.18.0](https://github.com/apple/swift-nio)
-- [Swift-Log 1.2.0](https://github.com/apple/swift-log)
+- [Swift-NIO v2.19.0](https://github.com/apple/swift-nio)
+- [Swift-Log 1.3.0](https://github.com/apple/swift-log)
 - [Swift-Argument-Parser 0.0.6](https://github.com/apple/swift-argument-parser)
-- [SwiftyBytes 0.2.3](https://github.com/Xenoxiluna/SwiftyBytes)
+- [SwiftyBytes 0.4.0](https://github.com/Xenoxiluna/SwiftyBytes)
 - [XTerraPacket](https://github.com/Xenoxiluna/XTerraPacket)
 
  ## Building
