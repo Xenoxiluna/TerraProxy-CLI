@@ -16,6 +16,12 @@ typealias InboundIn = ByteBuffer
 
 func HandlePacket(channel: Channel, bb: InboundIn, connection: PlayerConnection) {
     let packetData = bb.getBytes(at: 0, length: bb.readableBytes)!
+    if packetData[0] != packetData.count{
+        print("INVALID PACKET!")
+        print("INVALID BYTES: \(packetData))")
+        channel.writeAndFlush(NIOAny.init(bb), promise: nil)
+        return
+    }
     guard var packet = try? TerrariaPacketFactory.decodePacket(packet: packetData) else {
         print("Parse failed!")
         print("Failed bytes: \(packetData))")

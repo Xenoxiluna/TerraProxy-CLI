@@ -80,7 +80,7 @@ class ProxySourceInBound : ChannelInboundHandler {
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
             .channelInitializer { channel in
                 channel.pipeline.addHandlers(self.targetIntercept).flatMap{ _ in
-                    channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger) )
+                    channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger, connection: self.connection) )
                 }
             }
 
