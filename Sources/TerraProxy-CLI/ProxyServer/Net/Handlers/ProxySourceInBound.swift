@@ -53,7 +53,7 @@ class ProxySourceInBound : ChannelInboundHandler {
 		    channelsSyncQueue.async {
                 if let channel = self.channels[id] {
                     let bb = self.unwrapInboundIn(data)
-                    HandlePacket(channel: channel, bb: bb, connection: self.connection)
+                    HandlePacket(channel: channel, bb: bb, connection: self.connection, PacketDirection.ClientToServer)
                 }
 		    }
 		}
@@ -99,7 +99,7 @@ class ProxySourceInBound : ChannelInboundHandler {
                         self.connectionState = .connected
                         //_ = channel.writeAndFlush(data)
                         let bb = self.unwrapInboundIn(data)
-                        HandlePacket(channel: channel, bb: bb, connection: self.connection)
+                        HandlePacket(channel: channel, bb: bb, connection: self.connection, PacketDirection.ClientToServer)
                     }
             }
         }

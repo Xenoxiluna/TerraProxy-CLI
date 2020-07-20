@@ -29,7 +29,7 @@ class ProxyTargetInBound : ChannelInboundHandler {
 	public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
 		//_ = source.writeAndFlush(data)
         let bb = self.unwrapInboundIn(data)
-        HandlePacket(channel: source, bb: bb, connection: self.connection)
+        HandlePacket(channel: source, bb: bb, connection: self.connection, PacketDirection.ServerToClient)
 	}
 	
 	public func channelInactive(context: ChannelHandlerContext) {

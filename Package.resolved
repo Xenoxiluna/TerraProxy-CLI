@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/SwiftyBytes.git",
         "state": {
           "branch": null,
-          "revision": "36955189f0c4f985912b7c2ed7345ce9f9669cc7",
-          "version": "0.4.1"
+          "revision": "c3efe115a8cda9061fa6bb5a2dd08b61e6d8a5e9",
+          "version": "0.4.2"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/XTerraPacket.git",
         "state": {
           "branch": null,
-          "revision": "05755e53de4b4a5c6b8842f50e106bde0066e932",
-          "version": "0.6.2"
+          "revision": "4fc446e3b4f7c7ec2521f1efc411199eb9b0049a",
+          "version": "0.6.6"
         }
       }
     ]
