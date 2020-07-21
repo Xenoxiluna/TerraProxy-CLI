@@ -15,16 +15,11 @@ public class ProxyServer {
 	let source  : HostInfo
 	let target  : HostInfo
     let logger  : Logger
-    
-	let sourceIntercept: [ChannelHandler]
-	let targetIntercept: [ChannelHandler]
 	
-    public init(source: HostInfo, target: HostInfo, sourceIntercept:[ChannelHandler] = [], logger: Logger, targetIntercept:[ChannelHandler] = [], group: MultiThreadedEventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)) {
+    public init(source: HostInfo, target: HostInfo, logger: Logger, group: MultiThreadedEventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)) {
 		self.source          = source
 		self.target          = target
 		self.group           = group
-		self.sourceIntercept = sourceIntercept
-		self.targetIntercept = targetIntercept
         self.logger          = logger
 	}
 	
@@ -34,8 +29,8 @@ public class ProxyServer {
 			.serverChannelOption(ChannelOptions.backlog, value: 256)
 			.serverChannelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
 			.childChannelInitializer { channel in
-				channel.pipeline.addHandlers(self.sourceIntercept).flatMap { _ in
-                    channel.pipeline.addHandler(ProxySourceInBound(group: self.group, target: self.target, logger: self.logger, targetIntercept: self.targetIntercept))
+				channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder())]).flatMap { _ in
+                    channel.pipeline.addHandler(ProxySourceInBound(group: self.group, target: self.target, logger: self.logger))
 				}
 			}
 			.childChannelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)

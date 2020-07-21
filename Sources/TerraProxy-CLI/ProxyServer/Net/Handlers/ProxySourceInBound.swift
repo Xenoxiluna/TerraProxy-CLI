@@ -24,12 +24,9 @@ class ProxySourceInBound : ChannelInboundHandler {
 	private var connection: PlayerConnection = PlayerConnection()
 	private let channelsSyncQueue = DispatchQueue(label: "channelsQueue")
 	
-	let targetIntercept : [ChannelHandler]
-	
-	public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger, targetIntercept:[ChannelHandler] = []) {
+	public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger) {
 		self.group           = group
 		self.target          = target
-		self.targetIntercept = targetIntercept
 		self.logger          = logger
 		self.connectionState = .idle
 	}
@@ -79,7 +76,7 @@ class ProxySourceInBound : ChannelInboundHandler {
         let bootstrap = ClientBootstrap(group: self.group)
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
             .channelInitializer { channel in
-                channel.pipeline.addHandlers(self.targetIntercept).flatMap{ _ in
+                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder())]).flatMap{ _ in
                     channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger, connection: self.connection) )
                 }
             }
