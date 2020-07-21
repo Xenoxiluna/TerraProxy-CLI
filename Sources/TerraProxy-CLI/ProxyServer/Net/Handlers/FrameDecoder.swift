@@ -16,7 +16,6 @@ public final class FrameDecoder: ByteToMessageDecoder {
     ///
     private enum DecoderReadState {
         case waitingForHeader
-        case parseFrame
         case waitingForFrame(length: Int)
     }
 
