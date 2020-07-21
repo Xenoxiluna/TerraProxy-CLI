@@ -24,7 +24,7 @@ public final class FrameDecoder: ByteToMessageDecoder {
     
     private var readState: DecoderReadState = .waitingForHeader
     
-    /// Create `PacketFrameDecoder`
+    /// Create `FrameDecoder`
     public init() {}
     
     public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
