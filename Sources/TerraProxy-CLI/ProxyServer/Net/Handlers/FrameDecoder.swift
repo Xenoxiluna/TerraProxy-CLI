@@ -98,6 +98,6 @@ public final class FrameDecoder: ByteToMessageDecoder {
     ///    - buffer: The buffer containing the integer frame length.
     ///
     private func getFrameLength(for buffer: inout ByteBuffer) -> Int? {
-        return buffer.getInteger(at: 0, endianness: .little, as: UInt16.self).map { Int($0) }
+        return buffer.getInteger(at: buffer.readerIndex, endianness: .little, as: UInt16.self).map { Int($0) }
     }
 }
