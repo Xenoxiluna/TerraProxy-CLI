@@ -63,7 +63,7 @@ class TerrariaPacketHandler: ChannelInboundHandler{
         switch packet.getType(){
         case TerrariaPacketType.ConnectApproval:
             let appPacket = packet as! PacketConnectApproval
-            connection.setPlayerId(playerId: Int(appPacket.playerId))
+            connection.setPlayerId(Int(appPacket.playerId))
             print("")
         case TerrariaPacketType.PlayerInfo:
             let appPacket = packet as! PacketPlayerInfo

@@ -10,17 +10,16 @@ import Foundation
 import NIO
 import NIOHTTP1
 
-class PlayerConnection {
-    var LAST_PLAYER_ID: Int = 0
-    var playerId: Int
+internal class PlayerConnection {
+    var playerId: Int = 255
     var playerName: String = ""
     var channel: Channel?
-    var phase: PlayerConnectionState?
+    var state: PlayerConnectionState = .Login
 
-    init(){
-        self.playerId = self.LAST_PLAYER_ID + 1
-        self.channel = nil
-        self.phase = nil
+    init(){}
+    
+    init(_ playerId: Int){
+        self.playerId = playerId
     }
 
     func setChannel(channel: Channel) {
@@ -46,15 +45,7 @@ class PlayerConnection {
         return playerId
     }
     
-    func setPlayerId(playerId: Int) {
+    func setPlayerId(_ playerId: Int) {
         self.playerId = playerId
-    }
-
-    func getPhase() -> PlayerConnectionState {
-        return phase!
-    }
-
-    func setPhase(state: PlayerConnectionState) {
-        phase = state
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum PacketDirection{
+internal enum PacketDirection{
     case ServerToClient
     case ClientToServer
     case none
