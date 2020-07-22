@@ -21,7 +21,6 @@ class ProxySourceInBound : ChannelInboundHandler {
 	private var connectionState : ConnectionState
 	private var channels        : [ObjectIdentifier : Channel] = [:]
 	
-	private var connection: PlayerConnection = PlayerConnection()
 	private let channelsSyncQueue = DispatchQueue(label: "channelsQueue")
 	
 	public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger) {
@@ -49,8 +48,7 @@ class ProxySourceInBound : ChannelInboundHandler {
 		case .connected:
 		    channelsSyncQueue.async {
                 if let channel = self.channels[id] {
-                    let bb = self.unwrapInboundIn(data)
-                    HandlePacket(channel: channel, bb: bb, connection: self.connection, PacketDirection.ClientToServer)
+                    _ = channel.writeAndFlush(data)
                 }
 		    }
 		}
@@ -76,8 +74,8 @@ class ProxySourceInBound : ChannelInboundHandler {
         let bootstrap = ClientBootstrap(group: self.group)
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
             .channelInitializer { channel in
-                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder())]).flatMap{ _ in
-                    channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger, connection: self.connection) )
+                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder()), TerrariaPacketHandler(.ServerToClient)]).flatMap{ _ in
+                    channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger) )
                 }
             }
 
@@ -92,11 +90,8 @@ class ProxySourceInBound : ChannelInboundHandler {
                             self.logger.info("Connection Successful: \(s.ipAddress!):\(s.port!)")
                         }
                         self.channels[id] = channel
-                        self.connection.setChannel(channel: channel)
                         self.connectionState = .connected
-                        //_ = channel.writeAndFlush(data)
-                        let bb = self.unwrapInboundIn(data)
-                        HandlePacket(channel: channel, bb: bb, connection: self.connection, PacketDirection.ClientToServer)
+                        _ = channel.writeAndFlush(data)
                     }
             }
         }

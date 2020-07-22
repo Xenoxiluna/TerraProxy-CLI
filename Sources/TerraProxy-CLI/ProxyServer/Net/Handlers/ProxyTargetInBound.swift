@@ -17,19 +17,15 @@ class ProxyTargetInBound : ChannelInboundHandler {
 	let group       : MultiThreadedEventLoopGroup
 	let source      : Channel
 	let logger      : Logger
-    let connection  : PlayerConnection
 	
-    public init(group: MultiThreadedEventLoopGroup, source: Channel, logger: Logger, connection: PlayerConnection) {
+    public init(group: MultiThreadedEventLoopGroup, source: Channel, logger: Logger) {
 		self.group       = group
 		self.source      = source
 		self.logger      = logger
-        self.connection  = connection
 	}
 	
 	public func channelRead(context: ChannelHandlerContext, data: NIOAny) {
-		//_ = source.writeAndFlush(data)
-        let bb = self.unwrapInboundIn(data)
-        HandlePacket(channel: source, bb: bb, connection: self.connection, PacketDirection.ServerToClient)
+		_ = source.writeAndFlush(data)
 	}
 	
 	public func channelInactive(context: ChannelHandlerContext) {

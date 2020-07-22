@@ -13,6 +13,7 @@ import NIOHTTP1
 class PlayerConnection {
     var LAST_PLAYER_ID: Int = 0
     var playerId: Int
+    var playerName: String = ""
     var channel: Channel?
     var phase: PlayerConnectionState?
 

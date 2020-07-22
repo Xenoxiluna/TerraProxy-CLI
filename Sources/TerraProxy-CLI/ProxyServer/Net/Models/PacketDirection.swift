@@ -10,4 +10,5 @@ import Foundation
 public enum PacketDirection{
     case ServerToClient
     case ClientToServer
+    case none
 }
