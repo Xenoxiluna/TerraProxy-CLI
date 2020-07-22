@@ -1,6 +1,6 @@
 # WORK IN PROGRESS
 # `TerraProxy-CLI`
-Terraria Proxy Server built with the intention of modifying packets on the fly. This proxy is asynchronous thanks to SwiftNIO and can support multiple users.
+Terraria Proxy Server built with the intention of modifying packets on the fly. It currently does nothing but identify and display all packets that go thorugh it. The proxy is asynchronous thanks to SwiftNIO and can support multiple users.
   
 ### You can find Binaries under Releases if available.
 
