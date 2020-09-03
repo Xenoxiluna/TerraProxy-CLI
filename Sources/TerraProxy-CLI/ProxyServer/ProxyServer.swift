@@ -29,9 +29,7 @@ public class ProxyServer {
 			.serverChannelOption(ChannelOptions.backlog, value: 256)
 			.serverChannelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
 			.childChannelInitializer { channel in
-                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder()), TerrariaPacketHandler(.ClientToServer)]).flatMap { _ in
-                    channel.pipeline.addHandler(ProxySourceInBound(group: self.group, target: self.target, logger: self.logger))
-				}
+                channel.pipeline.addHandlers(self.createHandlers())
 			}
 			.childChannelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
 			.childChannelOption(ChannelOptions.maxMessagesPerRead, value: 16)
@@ -58,4 +56,10 @@ public class ProxyServer {
         self.logger.info("Stopping proxy server...")
 		group.shutdownGracefully(queue: DispatchQueue.main, complete)
 	}
+    
+    private func createHandlers() -> [ChannelHandler]{
+        let playerConn: PlayerConnection = PlayerConnection()
+        
+        return [ByteToMessageHandler(FrameDecoder()), TerrariaPacketHandler(.ClientToServer, playerConn), ProxySourceInBound(group: self.group, target: self.target, logger: self.logger, playerConnection: playerConn)]
+    }
 }

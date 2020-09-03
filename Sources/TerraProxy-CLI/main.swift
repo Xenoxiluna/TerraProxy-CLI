@@ -59,7 +59,7 @@ struct Proxy: ParsableCommand {
         var shouldQuit = false
         while !shouldQuit{
             print("Please enter a command: ")
-            var input = getInput()
+            let input = getInput()
             switch input{
             case "start":
                 let proxy  = ProxyServer(source: source, target: target, logger: logger)
@@ -80,6 +80,7 @@ struct Proxy: ParsableCommand {
                             logger.info("Proxy Server stopped!")
                     }
                 })
+                shouldQuit = true
             case "loglevel":
                 print("Not Implemented")
                 print(logger.logLevel)

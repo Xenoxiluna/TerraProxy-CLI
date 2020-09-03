@@ -7,8 +7,8 @@ Terraria Proxy Server built with the intention of modifying packets on the fly. 
 ## Compatibility
 | OS |
 |---|
-| macOS 10.15.4 |
-| Ubuntu 18.04 64bit |
+| macOS 10.15.X |
+| Ubuntu 18.04 X86-64bit |
 | Ubuntu 18.04 ARM64/32 |
 
  ## Usage
@@ -25,14 +25,14 @@ Terraria Proxy Server built with the intention of modifying packets on the fly. 
  
  ## Dependencies
 
-- [Swift-NIO v2.19.0](https://github.com/apple/swift-nio)
-- [Swift-Log 1.3.0](https://github.com/apple/swift-log)
+- [Swift-NIO v2.22.0](https://github.com/apple/swift-nio)
+- [Swift-Log 1.4.0](https://github.com/apple/swift-log)
 - [Swift-Argument-Parser 0.0.6](https://github.com/apple/swift-argument-parser)
-- [SwiftyBytes 0.4.0](https://github.com/Xenoxiluna/SwiftyBytes)
-- [XTerraPacket](https://github.com/Xenoxiluna/XTerraPacket)
+- [SwiftyBytes 0.4.3](https://github.com/Xenoxiluna/SwiftyBytes)
+- [XTerraPacket 0.7.1](https://github.com/Xenoxiluna/XTerraPacket)
 
  ## Building
- To build on linux:
+ To build on linux & macOS:
  
  git clone https://github.com/Xenoxiluna/TerraProxy-CLI.git<br/>
  cd TerraProxy-CLI<br/>

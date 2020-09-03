@@ -28,9 +28,6 @@ public final class FrameDecoder: ByteToMessageDecoder {
     public init() {}
     
     public func decode(context: ChannelHandlerContext, buffer: inout ByteBuffer) throws -> DecodingState {
-        /*print("RI: \(buffer.readerIndex)")
-        print("RB: \(buffer.readableBytes)")
-        print("Bytes: \(buffer.getBytes(at: buffer.readerIndex, length: buffer.readableBytes))")*/
         if case .waitingForHeader = self.readState {
             try self.setLengthFieldToState(buffer: &buffer)
         }
@@ -49,7 +46,7 @@ public final class FrameDecoder: ByteToMessageDecoder {
     }
     
     public func decodeLast(context: ChannelHandlerContext, buffer: inout ByteBuffer, seenEOF: Bool) throws -> DecodingState {
-        // we'll just try to decode as much as we can as usually
+        // try to decode as much as we can
         while case .continue = try self.decode(context: context, buffer: &buffer) {}
         if buffer.readableBytes > 0 {
             context.fireErrorCaught(ProxyServerErrors.LeftOverBytesError(leftOverBytes: buffer))

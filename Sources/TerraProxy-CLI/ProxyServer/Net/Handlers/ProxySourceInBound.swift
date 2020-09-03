@@ -19,15 +19,17 @@ class ProxySourceInBound : ChannelInboundHandler {
 	private let target          : HostInfo
 	private let logger          : Logger
 	private var connectionState : ConnectionState
+    private var playerConnection: PlayerConnection
 	private var channels        : [ObjectIdentifier : Channel] = [:]
 	
 	private let channelsSyncQueue = DispatchQueue(label: "channelsQueue")
 	
-	public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger) {
-		self.group           = group
-		self.target          = target
-		self.logger          = logger
-		self.connectionState = .idle
+    public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger, playerConnection: PlayerConnection) {
+		self.group              = group
+		self.target             = target
+		self.logger             = logger
+		self.connectionState    = .idle
+        self.playerConnection   = playerConnection
 	}
 
 	public func channelActive(context: ChannelHandlerContext) {
@@ -74,7 +76,7 @@ class ProxySourceInBound : ChannelInboundHandler {
         let bootstrap = ClientBootstrap(group: self.group)
             .channelOption(ChannelOptions.socket(SocketOptionLevel(SOL_SOCKET), SO_REUSEADDR), value: 1)
             .channelInitializer { channel in
-                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder()), TerrariaPacketHandler(.ServerToClient)]).flatMap{ _ in
+                channel.pipeline.addHandlers([ByteToMessageHandler(FrameDecoder()), TerrariaPacketHandler(.ServerToClient, self.playerConnection)]).flatMap{ _ in
                     channel.pipeline.addHandler( ProxyTargetInBound(group: self.group, source: source, logger: self.logger) )
                 }
             }

@@ -41,6 +41,14 @@ internal class PlayerConnection {
         return self.channel!
     }
 
+    func getConnectionState() -> PlayerConnectionState {
+        return state
+    }
+    
+    func setConnectionState(_ state: PlayerConnectionState){
+        self.state = state
+    }
+    
     func getPlayerId() -> Int {
         return playerId
     }

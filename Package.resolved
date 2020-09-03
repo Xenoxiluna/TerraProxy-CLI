@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "8a865bd15e69526cbdfcfd7c47698eb20b2ba951",
-          "version": "2.19.0"
+          "revision": "5fc24345f92ec4c274121776c215ab0aa1ed4d50",
+          "version": "2.22.0"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/SwiftyBytes.git",
         "state": {
           "branch": null,
-          "revision": "c3efe115a8cda9061fa6bb5a2dd08b61e6d8a5e9",
-          "version": "0.4.2"
+          "revision": "e766ac50ea900eed01a164545add341789864665",
+          "version": "0.4.3"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/Xenoxiluna/XTerraPacket.git",
         "state": {
           "branch": null,
-          "revision": "4fc446e3b4f7c7ec2521f1efc411199eb9b0049a",
-          "version": "0.6.6"
+          "revision": "8401f9421b07ba6b898d387886672eff223c0ea9",
+          "version": "0.7.1"
         }
       }
     ]
