@@ -14,12 +14,12 @@ Terraria Proxy Server built with the intention of modifying packets on the fly. 
  ## Usage
  From terminal, run the following:
  
- `TerraProxy-CLI proxy --proxy-target <IP or Hostname> --target-port <port> --proxy-source <IP or Hostname> --source-port <port>`
+ `TerraProxy-CLI --proxy-target <IP or Hostname> --target-port <port> --proxy-source <IP or Hostname> --source-port <port>`
  
  For example:
  This will proxy your connection to the terraria server at terraserver.com on port 7777(terraserver.com:7777). Proxy source is the local ip in which the proxy server is running on. 
  
- `TerraProxy-CLI proxy --proxy-target terraserver.com --target-port 7777 --proxy-source 127.0.0.1 --source-port 7777`
+ `TerraProxy-CLI --proxy-target terraserver.com --target-port 7777 --proxy-source 127.0.0.1 --source-port 7777`
  
  When in game, you would connect to 127.0.0.1 on port 7777
  
