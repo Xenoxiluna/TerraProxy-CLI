@@ -11,17 +11,17 @@ import Logging
 
 class ProxyTargetInBound : ChannelInboundHandler {
 	
-	public typealias InboundIn   = ByteBuffer
+	public typealias InboundIn = ByteBuffer
 	public typealias OutboundOut = ByteBuffer
 
-	let group       : MultiThreadedEventLoopGroup
-	let source      : Channel
-	let logger      : Logger
+	let group: MultiThreadedEventLoopGroup
+	let source: Channel
+	let logger: Logger
 	
     public init(group: MultiThreadedEventLoopGroup, source: Channel, logger: Logger) {
-		self.group       = group
-		self.source      = source
-		self.logger      = logger
+		self.group = group
+		self.source = source
+		self.logger = logger
 	}
 	
 	public func channelRead(context: ChannelHandlerContext, data: NIOAny) {

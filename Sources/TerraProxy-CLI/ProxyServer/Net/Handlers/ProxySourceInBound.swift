@@ -15,21 +15,21 @@ class ProxySourceInBound : ChannelInboundHandler {
 	public typealias OutboundOut = ByteBuffer
 
 
-	private let group           : MultiThreadedEventLoopGroup
-	private let target          : HostInfo
-	private let logger          : Logger
+	private let group: MultiThreadedEventLoopGroup
+	private let target: HostInfo
+	private let logger: Logger
 	private var connectionState : ConnectionState
     private var playerConnection: PlayerConnection
-	private var channels        : [ObjectIdentifier : Channel] = [:]
+	private var channels: [ObjectIdentifier : Channel] = [:]
 	
 	private let channelsSyncQueue = DispatchQueue(label: "channelsQueue")
 	
     public init(group: MultiThreadedEventLoopGroup, target: HostInfo, logger: Logger, playerConnection: PlayerConnection) {
-		self.group              = group
-		self.target             = target
-		self.logger             = logger
-		self.connectionState    = .idle
-        self.playerConnection   = playerConnection
+		self.group = group
+		self.target = target
+		self.logger = logger
+		self.connectionState = .idle
+        self.playerConnection = playerConnection
 	}
 
 	public func channelActive(context: ChannelHandlerContext) {

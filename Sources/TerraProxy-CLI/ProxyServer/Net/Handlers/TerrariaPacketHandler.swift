@@ -1,5 +1,5 @@
 //
-//  PacketHandler.swift
+//  TerrariaPacketHandler.swift
 //  TerrariaProxyServer
 //
 //  Created by Quentin Berry on 4/13/20.

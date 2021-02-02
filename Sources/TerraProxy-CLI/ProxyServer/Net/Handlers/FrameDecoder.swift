@@ -61,7 +61,6 @@ public final class FrameDecoder: ByteToMessageDecoder {
     ///    - buffer: The buffer containing the integer frame length.
     ///
     private func setLengthFieldToState(buffer: inout ByteBuffer) throws {
-
         // Convert the length field to an integer specifying the length
         guard let lengthFieldValue = self.getFrameLength(for: &buffer) else {
             return

@@ -25,6 +25,9 @@ struct Proxy: ParsableCommand {
     
     @Flag(help: "Start proxy with debug logs")
     var debugMode: Bool
+    
+    @Flag(help: "Start proxy service only(without CLI Interface)")
+    var serviceOnly: Bool
 
     @Option(help: "Change logger label.")
     var loggerlabel: String?
@@ -55,49 +58,54 @@ struct Proxy: ParsableCommand {
         }
         
         print("Welcome to TerraProxy!")
-        print("Type 'help' for a list of commands")
-        var shouldQuit = false
-        while !shouldQuit{
-            print("Please enter a command: ")
-            let input = getInput()
-            switch input{
-            case "start":
-                let proxy  = ProxyServer(source: source, target: target, logger: logger)
-                proxy.start { result in
-                    switch result {
-                        case .failure(let error):
-                            logger.error("Failed to start proxy server: \(error)")
-                        case .success:
-                            logger.info("Proxy Server Started: \(source) <--> \(target)")
+        if !serviceOnly {
+            print("Type 'help' for a list of commands")
+            var shouldQuit = false
+            while !shouldQuit{
+                print("Please enter a command: ")
+                let input = getInput()
+                switch input{
+                case "start":
+                    let proxy  = ProxyServer(source: source, target: target, logger: logger)
+                    proxy.start { result in
+                        switch result {
+                            case .failure(let error):
+                                logger.error("Failed to start proxy server: \(error)")
+                            case .success:
+                                logger.info("Proxy Server Started: \(source) <--> \(target)")
+                        }
                     }
-                }
-            case "quit":
-                proxy.stop(then: { result in
-                    switch result {
-                        case .some(let error):
-                            logger.error("Failed to stop proxy server: \(error)")
-                        default:
-                            logger.info("Proxy Server stopped!")
-                    }
-                })
-                shouldQuit = true
-            case "loglevel":
-                print("Not Implemented")
-                print(logger.logLevel)
-            case "help":
-                print("""
-                Command List:
-                help
-                loglevel
-                start
-                quit
+                case "quit":
+                    proxy.stop(then: { result in
+                        switch result {
+                            case .some(let error):
+                                logger.error("Failed to stop proxy server: \(error)")
+                            default:
+                                logger.info("Proxy Server stopped!")
+                        }
+                    })
+                    shouldQuit = true
+                case "loglevel":
+                    print("Not Implemented")
+                    print(logger.logLevel)
+                case "help":
+                    print("""
+                    Command List:
+                    help
+                    loglevel
+                    start
+                    quit
 
-                """)
-            default:
-                print("Command not recognized!")
+                    """)
+                default:
+                    print("Command not recognized!")
+                }
             }
+            //RunLoop.main.run()
+        }else{
+            print("Background Service Mode")
+            RunLoop.main.run()
         }
-        //RunLoop.main.run()
     }
 }
 

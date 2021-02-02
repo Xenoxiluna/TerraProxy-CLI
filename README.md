@@ -23,6 +23,16 @@ Terraria Proxy Server built with the intention of modifying packets on the fly. 
  
  When in game, you would connect to 127.0.0.1 on port 7777
  
+ ### Docker
+ To pull from docker:
+ `docker pull xenoxiluna/terraproxy-cli`
+ 
+ To build from dockerfile:
+ `docker build -t terraproxy-cli .`
+ 
+ To run:
+ `docker run -p 7777:7777 terraproxy-cli`
+ 
  ## Dependencies
 
 - [Swift-NIO v2.22.0](https://github.com/apple/swift-nio)

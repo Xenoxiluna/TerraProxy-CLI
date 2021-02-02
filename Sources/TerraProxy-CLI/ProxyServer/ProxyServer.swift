@@ -11,16 +11,16 @@ import NIO
 import Logging
 
 public class ProxyServer {
-	let group   : MultiThreadedEventLoopGroup
-	let source  : HostInfo
-	let target  : HostInfo
-    let logger  : Logger
+	let group: MultiThreadedEventLoopGroup
+	let source: HostInfo
+	let target: HostInfo
+    let logger: Logger
 	
     public init(source: HostInfo, target: HostInfo, logger: Logger, group: MultiThreadedEventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)) {
-		self.source          = source
-		self.target          = target
-		self.group           = group
-        self.logger          = logger
+		self.source = source
+		self.target = target
+		self.group = group
+        self.logger = logger
 	}
 	
 	public func start(then complete: @escaping (Result<Void,Error>) -> Void) {
@@ -48,7 +48,7 @@ public class ProxyServer {
 		
 		switch source {
 			case .ip(host: let host, port: let port): bootstrap.bind(host: host, port: port).whenComplete(completion)
-			case .unixDomainSocket(path: let path)  : bootstrap.bind(unixDomainSocketPath: path).whenComplete(completion)
+			case .unixDomainSocket(path: let path): bootstrap.bind(unixDomainSocketPath: path).whenComplete(completion)
 		}
 	}
 	
